@@ -1,0 +1,10 @@
+{% for visitor in visitors %}
+<div class="row">
+    <div class="col-xs-1-12">
+        <p>{{ visitor.session_id }}</p>
+    </div>
+    <div class="col-xs-1-12">
+        <button class="btn btn-primary" type="button" onclick="openChatSession('{{ visitor.session_id }}')">Chat</button>
+    </div>
+</div>
+{% endfor %}
