@@ -3,4 +3,4 @@ OAuth_Credentials.txt
 .gitignore
 *.sql
 */migrations
-*/__pycache_
+*/__pycache__
