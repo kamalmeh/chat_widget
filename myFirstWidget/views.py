@@ -20,14 +20,23 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request, 'testpage.html', {})
+            if request.method == 'POST':
+                token_url = HttpRequest.scheme + '://' + request.get_host() + ':' + request.get_port() + '/o/token'
+                # params = {''}
+                # r = requests.post(token_url, params=request.POST)
+                # HttpResponse._headers['Authorization'] = 
+                visitors = Current_Logged_On_User.objects.values("session_id")
+                return redirect('/users')
         else:
             return render(request, 'login.html', {'error':"Invalid Credentials"})
 
-def chat_admin_view(req):
-    visitors = Current_Logged_On_User.objects.values("session_id")
-    # data = render(req, "users.html", context={'visitors' : visitors})
-    return render(req, 'chat_admin_view.html', context={'content' : visitors})
+def chat_admin_view(request):
+    if request.user.is_authenticated:
+        visitors = Current_Logged_On_User.objects.values("session_id")
+        # data = render(req, "users.html", context={'visitors' : visitors})
+        return render(request, 'chat_admin_view.html', context={'content' : visitors})
+    else:
+        return render(request, 'login.html', {})
 
 class CurrentVisitors(ProtectedResourceView):
     # @login_required
@@ -40,10 +49,17 @@ class CurrentVisitors(ProtectedResourceView):
     
     def post(self, request, *args, **kwargs):
         visitors_list = []
-        visitors = Current_Logged_On_User.objects.values("session_id")
+        visitors = Current_Logged_On_User.objects.get("session_id")
         for visitor in visitors:
             visitors_list.append(visitor['session_id'])
         return HttpResponse(json.dumps(visitors_list), content_type='application/json')
+
+def getCurrentUsers(request):
+    visitors_list = []
+    visitors = Current_Logged_On_User.objects.values("session_id")
+    for visitor in visitors:
+        visitors_list.append(visitor['session_id'])
+    return HttpResponse(json.dumps(visitors_list), content_type='application/json')
 
 def getSessionId(req):
     characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

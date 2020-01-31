@@ -205,11 +205,11 @@ function getCurrentUsers() {
 
     // Ajax call here
     $.ajax({
-        type: "GET",
-        url: "/getCurrentVisitors",
+        type: "POST",
+        url: "/getCurrentUsers",
         processData: false,
         contentType: false,
-        // data: { 'csrftoken': csrftoken },
+        data: { 'csrftoken': csrftoken },
         success: function(session_Id_array) {
             // console.log(session_Id_array);
             var sessions = Object.keys(websockets);
