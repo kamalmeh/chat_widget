@@ -49,7 +49,7 @@ class CurrentVisitors(ProtectedResourceView):
     
     def post(self, request, *args, **kwargs):
         visitors_list = []
-        visitors = Current_Logged_On_User.objects.get("session_id")
+        visitors = Current_Logged_On_User.objects.values("session_id")
         for visitor in visitors:
             visitors_list.append(visitor['session_id'])
         return HttpResponse(json.dumps(visitors_list), content_type='application/json')
