@@ -27,7 +27,7 @@ def login_view(request):
 def chat_admin_view(req):
     visitors = Current_Logged_On_User.objects.values("session_id")
     # data = render(req, "users.html", context={'visitors' : visitors})
-    return render(req, 'chat_admin_view.html', context={'content' : data})
+    return render(req, 'chat_admin_view.html', context={'content' : visitors})
 
 class CurrentVisitors(ProtectedResourceView):
     # @login_required
