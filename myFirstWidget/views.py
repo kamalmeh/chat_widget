@@ -21,7 +21,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             if request.method == 'POST':
-                token_url = HttpRequest.scheme + '://' + request.get_host() + ':' + request.get_port() + '/o/token'
+                # token_url = HttpRequest.scheme + '://' + request.get_host() + ':' + request.get_port() + '/o/token'
                 # params = {''}
                 # r = requests.post(token_url, params=request.POST)
                 # HttpResponse._headers['Authorization'] = 
