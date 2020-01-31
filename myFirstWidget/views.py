@@ -41,24 +41,30 @@ def chat_admin_view(request):
 class CurrentVisitors(ProtectedResourceView):
     # @login_required
     def get(self, request, *args, **kwargs):
-        visitors_list = []
+        visitors_list = {}
         visitors = Current_Logged_On_User.objects.values("session_id")
+        i = 0
         for visitor in visitors:
-            visitors_list.append(visitor['session_id'])
+            visitors_list[i] = visitor['session_id']
+            i = i + 1
         return HttpResponse(json.dumps(visitors_list), content_type='application/json')
     
     def post(self, request, *args, **kwargs):
-        visitors_list = []
+        visitors_list = {}
         visitors = Current_Logged_On_User.objects.values("session_id")
+        i = 0
         for visitor in visitors:
-            visitors_list.append(visitor['session_id'])
+            visitors_list[i] = visitor['session_id']
+            i = i + 1
         return HttpResponse(json.dumps(visitors_list), content_type='application/json')
 
 def getCurrentUsers(request):
-    visitors_list = []
+    visitors_list = {}
     visitors = Current_Logged_On_User.objects.values("session_id")
+    i = 0
     for visitor in visitors:
-        visitors_list.append(visitor['session_id'])
+        visitors_list[i] = visitor['session_id']
+        i = i + 1
     return HttpResponse(json.dumps(visitors_list), content_type='application/json')
 
 def getSessionId(req):
